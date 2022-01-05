@@ -1,4 +1,5 @@
 var router = require('koa-router')();
+const controller = require('../controller/screen')
 
 router.get('/', function *(next) {
   yield this.render('index', {
@@ -11,5 +12,7 @@ router.get('/foo', function *(next) {
     title: 'Hello World foo!'
   });
 });
+
+router.get('/getscreen', controller.getScreen)
 
 module.exports = router;
