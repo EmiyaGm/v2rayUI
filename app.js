@@ -13,7 +13,7 @@ onerror(app);
 // global middlewares
 app.use(views('views', {
   root: __dirname + '/views',
-  default: 'jade'
+  default: 'ejs'
 }));
 app.use(require('koa-bodyparser')());
 app.use(json());

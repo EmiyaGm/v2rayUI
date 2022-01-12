@@ -1,18 +1,30 @@
-var router = require('koa-router')();
+var router = require('koa-router')()
 const controller = require('../controller/screen')
 
-router.get('/', function *(next) {
+router.get('/', function* (next) {
   yield this.render('index', {
-    title: 'Hello World Koa!'
-  });
-});
+    title: 'Hello World Koa!',
+  })
+})
 
-router.get('/foo', function *(next) {
+router.get('/foo', function* (next) {
   yield this.render('index', {
-    title: 'Hello World foo!'
-  });
-});
+    title: 'Hello World foo!',
+  })
+})
 
-router.get('/getscreen', controller.getScreen)
+router.get('/getscreen', function* (next) {
+  yield this.render('index', {
+    title: 'Hello World screen!',
+    shell: '',
+  })
+})
 
-module.exports = router;
+router.get('/screen', function* (next) {
+  this.body = {
+    result: '123',
+  }
+  // controller.getScreen(this)
+})
+
+module.exports = router
