@@ -3,11 +3,36 @@
   <head>
     <meta charset="UTF-8" />
     <title><%= title %></title>
-    <shell><%= shell %></shell>
   </head>
   <body>
     <h1><%= title %></h1>
     <p>Welcome to Koa222222222</p>
-    <p><%= shell %></p>
+    <p id="send">send</p>
+    <p id="code"></p>
   </body>
+  <script type="text/javascript">
+    /* 封装 WebSocket 实例化的方法  */
+    var CreateWebSocket = (function () {
+      return function (urlValue) {
+        if (window.WebSocket) return new WebSocket(urlValue)
+        if (window.MozWebSocket) return new MozWebSocket(urlValue)
+        return false
+      }
+    })()
+    /* 实例化 WebSocket 连接对象, 地址为 ws 协议 */
+    var webSocket = CreateWebSocket('ws://localhost:3001/ping')
+    /* 接收到服务端的消息时 */
+    webSocket.onmessage = function (msg) {
+      document.getElementById('code').innerHTML = document.getElementById('code').innerHTML + '<br />' + msg.data
+      console.log('服务端说:' + msg.data)
+    }
+    /* 关闭时 */
+    webSocket.onclose = function () {
+      console.log('关闭连接')
+    }
+    /* 发送消息 */
+    document.getElementById('send').onclick = function () {
+      webSocket.send('ping')
+    }
+  </script>
 </html>
