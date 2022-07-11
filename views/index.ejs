@@ -5,9 +5,8 @@
     <title><%= title %></title>
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to Koa222222222</p>
     <p id="send">send</p>
+    <p id="clear">清空</p>
     <p id="code"></p>
   </body>
   <script type="text/javascript">
@@ -23,7 +22,8 @@
     var webSocket = CreateWebSocket('ws://localhost:3001/ping')
     /* 接收到服务端的消息时 */
     webSocket.onmessage = function (msg) {
-      document.getElementById('code').innerHTML = document.getElementById('code').innerHTML + '<br />' + msg.data
+      document.getElementById('code').innerHTML =
+        document.getElementById('code').innerHTML + '<br />' + msg.data
       console.log('服务端说:' + msg.data)
     }
     /* 关闭时 */
@@ -32,7 +32,12 @@
     }
     /* 发送消息 */
     document.getElementById('send').onclick = function () {
+      document.getElementById('code').innerHTML = ''
       webSocket.send('ping')
+    }
+
+    document.getElementById('clear').onclick = function () {
+      document.getElementById('code').innerHTML = ''
     }
   </script>
 </html>

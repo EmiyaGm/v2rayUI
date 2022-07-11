@@ -1,5 +1,6 @@
 var router = require('koa-router')()
 const controller = require('../controller/screen')
+const jwt = require('jsonwebtoken')
 
 router.get('/', function* (next) {
   yield this.render('index', {
@@ -25,6 +26,14 @@ router.get('/screen', function* (next) {
     result: '123',
   }
   // controller.getScreen(this)
+})
+
+router.post('/login', async (ctx) => {
+  try {
+    const {username, password} = ctx.request.body
+  } catch (error) {
+    
+  }
 })
 
 module.exports = router
