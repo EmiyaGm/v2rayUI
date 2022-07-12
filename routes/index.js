@@ -2,35 +2,28 @@ var router = require('koa-router')()
 const controller = require('../controller/screen')
 const jwt = require('jsonwebtoken')
 
-router.get('/', function* (next) {
-  yield this.render('index', {
-    title: 'Hello World Koa!',
-  })
-})
-
-router.get('/foo', function* (next) {
-  yield this.render('index', {
-    title: 'Hello World foo!',
-  })
-})
-
-router.get('/getscreen', function* (next) {
-  yield this.render('index', {
-    title: 'Hello World screen!',
-    shell: '',
-  })
-})
-
-router.get('/screen', function* (next) {
-  this.body = {
-    result: '123',
-  }
-  // controller.getScreen(this)
+router.get('/', async (ctx) => {
+  ctx.body = '123123'
 })
 
 router.post('/login', async (ctx) => {
   try {
-    const {username, password} = ctx.request.body
+    const { username, password, type } = ctx.request.body
+    // TODO 验证用户
+    console.log(ctx.request.body)
+    ctx.body = {
+      status: 'ok',
+      type,
+      currentAuthority: 'admin',
+    }
+  } catch (error) {
+    console.log(error)
+  }
+})
+
+router.post('/currentUser', async (ctx) => {
+  try {
+    // TODO 获取当前登录用户信息
   } catch (error) {
     
   }

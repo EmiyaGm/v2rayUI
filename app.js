@@ -1,10 +1,13 @@
-var app = require('koa')(),
+var koa = require('koa'),
   logger = require('koa-logger'),
   json = require('koa-json'),
   views = require('koa-views'),
   onerror = require('koa-onerror'),
   WebSocket = require('ws')
 
+var app = new koa()
+
+var cors = require('koa2-cors')
 var index = require('./routes/index')
 var users = require('./routes/users')
 
@@ -19,6 +22,16 @@ app.use(
   views('views', {
     root: __dirname + '/views',
     default: 'ejs',
+  }),
+)
+app.use(
+  cors({
+    origin: '*',
+    exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'],
+    maxAge: 5,
+    credentials: true,
+    allowMethods: ['GET', 'POST', 'DELETE'],
+    allowHeaders: ['Content-Type', 'Authorization', 'Accept'],
   }),
 )
 app.use(require('koa-bodyparser')())
